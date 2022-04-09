@@ -1,0 +1,64 @@
+<div *ngIf="nameRef.errors?.required">Name is required</div>
+<div *ngIf="surnameRef.errors?.required">Surname is required</div>
+<div *ngIf="surnameRef.errors?.minlength">
+  Surname requires at least
+  {{ surnameRef.errors?.minlength.requiredLength }} chars
+</div>
+
+<div *ngIf="usernameRef.errors?.required">username is required</div>
+<div *ngIf="usernameRef.errors?.pattern">
+  username should contains only letters and numbers. No symbols
+</div>
+
+<div *ngIf="cityRef.errors?.required">City is required</div>
+<div *ngIf="cityRef.errors?.pattern">
+  city should contains only letters. No numbers, no symbols
+</div>
+
+<form #f="ngForm" (ngSubmit)="submitHandler(f)">
+  <input
+    ngModel
+    name="name"
+    placeholder="name"
+    required
+    class="form-control"
+    #nameRef="ngModel"
+    [ngClass]="{ 'is-invalid': nameRef.invalid && f.dirty }"
+  />
+
+  <input
+    ngModel
+    name=" surname"
+    placeholder="surname"
+    required
+    class="form-control"
+    minlength="3"
+    #surnameRef="ngModel"
+    [ngClass]="{ 'is-invalid': surnameRef.invalid && f.dirty }"
+  />
+
+  <input
+    ngModel
+    name="username"
+    placeholder="username (alphanumeric only)"
+    required
+    pattern="^[a-zA-Z0-9]*$"
+    class="form-control"
+    minlength="3"
+    #usernameRef="ngModel"
+    [ngClass]="{ 'is-invalid': usernameRef.invalid && f.dirty }"
+  />
+
+  <input
+    ngModel
+    name="city"
+    placeholder="city (alphanumeric only)"
+    required
+    pattern="^[a-zA-Z]*$"
+    class="form-control"
+    #cityRef="ngModel"
+    [ngClass]="{ 'is-invalid': cityRef.invalid && f.dirty }"
+  />
+
+  <button type="submit" [disabled]="f.invalid">SEND</button>
+</form>
